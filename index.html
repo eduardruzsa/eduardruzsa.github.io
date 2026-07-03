@@ -1,0 +1,683 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Eduard Gergo Ruzsa — Backend Software Engineer</title>
+<meta name="description" content="Eduard Gergo Ruzsa — Backend Software Engineer in Berlin with 6+ years designing distributed systems and production APIs across fintech, manufacturing automation, and developer tooling.">
+<meta property="og:title" content="Eduard Gergo Ruzsa — Backend Software Engineer">
+<meta property="og:description" content="6+ years designing distributed systems and production APIs across fintech, manufacturing automation, and developer tooling.">
+<meta property="og:type" content="website">
+<meta property="og:image" content="assets/avatar.jpg">
+<link rel="icon" href="assets/avatar.jpg">
+<style>
+  :root {
+    --bg: #0b0b0c;
+    --bg-soft: #18181b;
+    --text: #d4d4d8;
+    --text-strong: #fafafa;
+    --text-muted: #8f8f97;
+    --accent: #fafafa;
+    --accent-soft: rgba(255, 255, 255, 0.06);
+    --border: rgba(255, 255, 255, 0.13);
+    --chip-bg: rgba(255, 255, 255, 0.07);
+    --chip-text: #d4d4d8;
+    --card-hover: rgba(255, 255, 255, 0.04);
+    --shadow: 0 12px 32px rgba(0, 0, 0, 0.55);
+    --spotlight: rgba(255, 255, 255, 0.045);
+    color-scheme: dark;
+  }
+  :root[data-theme="light"] {
+    --bg: #fafafa;
+    --bg-soft: #f0f0f1;
+    --text: #3f3f46;
+    --text-strong: #09090b;
+    --text-muted: #71717a;
+    --accent: #18181b;
+    --accent-soft: rgba(0, 0, 0, 0.05);
+    --border: rgba(0, 0, 0, 0.13);
+    --chip-bg: rgba(0, 0, 0, 0.06);
+    --chip-text: #27272a;
+    --card-hover: rgba(0, 0, 0, 0.03);
+    --shadow: 0 12px 32px rgba(0, 0, 0, 0.08);
+    --spotlight: rgba(0, 0, 0, 0.035);
+    color-scheme: light;
+  }
+  @media (prefers-color-scheme: light) {
+    :root:not([data-theme="dark"]) {
+      --bg: #fafafa;
+      --bg-soft: #f0f0f1;
+      --text: #3f3f46;
+      --text-strong: #09090b;
+      --text-muted: #71717a;
+      --accent: #18181b;
+      --accent-soft: rgba(0, 0, 0, 0.05);
+      --border: rgba(0, 0, 0, 0.13);
+      --chip-bg: rgba(0, 0, 0, 0.06);
+      --chip-text: #27272a;
+      --card-hover: rgba(0, 0, 0, 0.03);
+      --shadow: 0 12px 32px rgba(0, 0, 0, 0.08);
+      --spotlight: rgba(0, 0, 0, 0.035);
+      color-scheme: light;
+    }
+    :root:not([data-theme="dark"]) #theme-toggle .sun { display: block; }
+    :root:not([data-theme="dark"]) #theme-toggle .moon { display: none; }
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    line-height: 1.65;
+    -webkit-font-smoothing: antialiased;
+    transition: background 0.3s, color 0.3s;
+  }
+  .mono {
+    font-family: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace;
+    font-size: 0.78rem;
+    letter-spacing: 0.08em;
+  }
+  a { color: var(--accent); }
+  ::selection { background: var(--accent); color: var(--bg); }
+
+  /* ---------- Cursor spotlight ---------- */
+  #spotlight {
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+    background: radial-gradient(600px at 50% 30%, var(--spotlight), transparent 80%);
+  }
+
+  /* ---------- Layout ---------- */
+  .layout {
+    position: relative;
+    z-index: 1;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 32px;
+    display: grid;
+    grid-template-columns: minmax(320px, 420px) 1fr;
+    gap: 24px;
+  }
+  aside {
+    position: sticky;
+    top: 0;
+    align-self: start;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 72px 48px 56px 0;
+  }
+  main { padding: 72px 0 24px; min-width: 0; }
+  section { margin-bottom: 88px; scroll-margin-top: 72px; }
+
+  /* ---------- Sidebar ---------- */
+  .avatar-ring {
+    width: 108px;
+    height: 108px;
+    border-radius: 50%;
+    padding: 3px;
+    background: conic-gradient(from 210deg, var(--accent), transparent 40%, var(--accent) 80%);
+    margin-bottom: 24px;
+    transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+  .avatar-ring:hover { transform: scale(1.06) rotate(4deg); }
+  .avatar-ring img {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    display: block;
+    object-fit: cover;
+    border: 3px solid var(--bg);
+  }
+  h1 {
+    font-size: clamp(1.9rem, 3.4vw, 2.6rem);
+    font-weight: 750;
+    letter-spacing: -0.025em;
+    line-height: 1.1;
+    color: var(--text-strong);
+  }
+  .role {
+    margin-top: 12px;
+    font-size: 1.05rem;
+    font-weight: 550;
+    color: var(--text);
+  }
+  .blurb {
+    margin-top: 14px;
+    max-width: 300px;
+    color: var(--text-muted);
+    font-size: 0.95rem;
+  }
+  .location {
+    margin-top: 14px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: var(--text-muted);
+    font-size: 0.85rem;
+  }
+  .location::before {
+    content: "";
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    background: var(--accent);
+    box-shadow: 0 0 0 0 var(--accent);
+    animation: ping 2.4s ease-out infinite;
+  }
+  @keyframes ping {
+    0% { box-shadow: 0 0 0 0 color-mix(in srgb, var(--accent) 50%, transparent); }
+    70%, 100% { box-shadow: 0 0 0 9px transparent; }
+  }
+
+  /* Sidebar nav */
+  nav { margin-top: 48px; }
+  nav a {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 9px 0;
+    text-decoration: none;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    font-weight: 650;
+  }
+  nav a .line {
+    width: 28px;
+    height: 1px;
+    background: var(--text-muted);
+    transition: width 0.25s ease, background 0.25s ease;
+  }
+  nav a:hover, nav a.active { color: var(--text-strong); }
+  nav a:hover .line, nav a.active .line { width: 56px; background: var(--accent); }
+
+  /* Sidebar footer: socials + theme */
+  .side-bottom { display: flex; align-items: center; gap: 6px; margin-top: 40px; }
+  .icon-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px; height: 40px;
+    border-radius: 10px;
+    color: var(--text-muted);
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    transition: color 0.2s, transform 0.2s, background 0.2s;
+  }
+  .icon-btn:hover { color: var(--accent); background: var(--accent-soft); transform: translateY(-3px); }
+  .icon-btn svg { width: 21px; height: 21px; fill: currentColor; }
+  #theme-toggle { margin-left: auto; border: 1px solid var(--border); }
+  #theme-toggle .sun { display: none; }
+  :root[data-theme="light"] #theme-toggle .sun { display: block; }
+  :root[data-theme="light"] #theme-toggle .moon { display: none; }
+
+  /* ---------- Section headers ---------- */
+  h2 {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    font-size: 0.85rem;
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--text-strong);
+    margin-bottom: 32px;
+  }
+  h2 .num { color: var(--text-muted); font-weight: 500; }
+  h2::after { content: ""; flex: 1; max-width: 160px; height: 1px; background: var(--border); }
+
+  /* ---------- About ---------- */
+  .about p { max-width: 620px; color: var(--text-muted); margin-bottom: 16px; font-size: 1.02rem; }
+  .about strong { color: var(--text-strong); font-weight: 600; }
+  .stats {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 14px;
+    margin-top: 32px;
+    max-width: 620px;
+  }
+  .stat {
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 18px 20px;
+    transition: transform 0.25s ease, border-color 0.25s ease, background 0.25s ease;
+  }
+  .stat:hover { transform: translateY(-4px); border-color: var(--accent); background: var(--accent-soft); }
+  .stat .num {
+    font-size: 1.8rem;
+    font-weight: 750;
+    letter-spacing: -0.02em;
+    color: var(--accent);
+    font-variant-numeric: tabular-nums;
+  }
+  .stat .label { font-size: 0.82rem; color: var(--text-muted); margin-top: 2px; line-height: 1.4; }
+
+  /* ---------- Skills ---------- */
+  .skill-group { margin-bottom: 26px; }
+  .skill-group h3 {
+    font-size: 0.95rem;
+    font-weight: 650;
+    color: var(--text-strong);
+    margin-bottom: 12px;
+  }
+  .chips { display: flex; flex-wrap: wrap; gap: 8px; max-width: 640px; }
+  .chip {
+    background: var(--chip-bg);
+    color: var(--chip-text);
+    border-radius: 999px;
+    padding: 5px 14px;
+    font-size: 0.8rem;
+    font-weight: 550;
+    font-family: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace;
+    transition: transform 0.2s ease, background 0.2s ease;
+    cursor: default;
+  }
+  .chip:hover { transform: translateY(-2px) scale(1.04); background: var(--accent); color: var(--bg); }
+
+  /* ---------- Experience ---------- */
+  .job-list { display: flex; flex-direction: column; }
+  .job {
+    display: grid;
+    grid-template-columns: 132px 1fr;
+    gap: 8px 24px;
+    padding: 22px 24px;
+    margin: 0 -24px;
+    border-radius: 14px;
+    border: 1px solid transparent;
+    transition: opacity 0.25s ease, background 0.25s ease, border-color 0.25s ease, transform 0.25s ease, box-shadow 0.25s ease;
+  }
+  @media (hover: hover) {
+    .job-list:hover .job:not(:hover) { opacity: 0.45; }
+    .job:hover {
+      background: var(--card-hover);
+      border-color: var(--border);
+      transform: translateY(-2px);
+      box-shadow: var(--shadow);
+    }
+    .job:hover h3 { color: var(--accent); }
+  }
+  .job .dates {
+    color: var(--text-muted);
+    text-transform: uppercase;
+    padding-top: 5px;
+    font-weight: 600;
+  }
+  .job h3 {
+    font-size: 1.05rem;
+    font-weight: 650;
+    color: var(--text-strong);
+    transition: color 0.25s ease;
+  }
+  .job h3 .sep { color: var(--text-muted); font-weight: 400; padding: 0 6px; }
+  .job h3 .company { color: inherit; }
+  .job .loc { font-size: 0.82rem; color: var(--text-muted); margin-top: 2px; }
+  .job ul { list-style: none; margin-top: 12px; display: grid; gap: 9px; }
+  .job li {
+    font-size: 0.92rem;
+    color: var(--text-muted);
+    padding-left: 18px;
+    position: relative;
+  }
+  .job li::before {
+    content: "▸";
+    position: absolute;
+    left: 0; top: 1px;
+    color: var(--accent);
+    font-size: 0.78rem;
+  }
+  .job li b { color: var(--text); font-weight: 600; }
+  .job .tags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 14px; }
+  .job .tag {
+    font-family: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace;
+    font-size: 0.72rem;
+    color: var(--chip-text);
+    background: var(--chip-bg);
+    border-radius: 999px;
+    padding: 3px 11px;
+  }
+
+  /* ---------- Education ---------- */
+  .edu {
+    display: grid;
+    grid-template-columns: 132px 1fr;
+    gap: 8px 24px;
+    padding: 22px 24px;
+    margin: 0 -24px;
+    border-radius: 14px;
+  }
+  .edu .dates { color: var(--text-muted); text-transform: uppercase; padding-top: 5px; font-weight: 600; }
+  .edu h3 { font-size: 1.02rem; font-weight: 650; color: var(--text-strong); }
+  .edu .degree { color: var(--accent); font-size: 0.9rem; font-weight: 600; }
+  .edu p { font-size: 0.9rem; color: var(--text-muted); margin-top: 8px; }
+
+  /* ---------- CTA / footer ---------- */
+  .cta {
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 36px;
+    text-align: center;
+    background: linear-gradient(180deg, var(--accent-soft), transparent);
+  }
+  .cta h3 { font-size: 1.4rem; font-weight: 720; color: var(--text-strong); letter-spacing: -0.01em; }
+  .cta p { color: var(--text-muted); margin: 10px auto 24px; max-width: 420px; font-size: 0.95rem; }
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 11px 24px;
+    border-radius: 10px;
+    font-size: 0.92rem;
+    font-weight: 650;
+    text-decoration: none;
+    background: var(--accent);
+    color: var(--bg);
+    transition: transform 0.2s ease, filter 0.2s ease;
+  }
+  .btn:hover { transform: translateY(-2px); filter: brightness(1.1); }
+  .btn.ghost { background: transparent; color: var(--text); border: 1px solid var(--border); margin-left: 10px; }
+  .btn.ghost:hover { border-color: var(--accent); color: var(--accent); }
+  footer {
+    padding: 8px 0 48px;
+    color: var(--text-muted);
+    font-size: 0.82rem;
+  }
+
+  /* ---------- Reveal on scroll ---------- */
+  html.js .reveal {
+    opacity: 0;
+    transform: translateY(24px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+  }
+  html.js .reveal.in { opacity: 1; transform: none; }
+
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    html.js .reveal { opacity: 1; transform: none; transition: none; }
+    .location::before { animation: none; }
+    * { transition-duration: 0.01ms !important; }
+  }
+
+  /* ---------- Responsive ---------- */
+  @media (max-width: 900px) {
+    .layout { display: block; padding: 0 24px; }
+    aside {
+      position: static;
+      height: auto;
+      padding: 56px 0 8px;
+    }
+    nav { display: none; }
+    main { padding-top: 40px; }
+    section { margin-bottom: 64px; }
+    .job, .edu { grid-template-columns: 1fr; gap: 2px 0; padding: 20px 18px; margin: 0 -18px; }
+    .job .dates, .edu .dates { padding-top: 0; margin-bottom: 6px; }
+    .side-bottom { margin-top: 28px; }
+  }
+</style>
+</head>
+<body>
+<div id="spotlight" aria-hidden="true"></div>
+
+<div class="layout">
+
+  <aside>
+    <div>
+      <div class="avatar-ring">
+        <img src="assets/avatar.jpg" alt="Portrait of Eduard Gergo Ruzsa" width="108" height="108">
+      </div>
+      <h1>Eduard Gergo Ruzsa</h1>
+      <p class="role">Senior Backend Software Engineer</p>
+      <p class="blurb">I design distributed systems and production APIs that move money, materials, and data reliably.</p>
+      <p class="location">Berlin, Germany</p>
+
+      <nav aria-label="Section navigation">
+        <a href="#about" class="mono active"><span class="line"></span>About</a>
+        <a href="#skills" class="mono"><span class="line"></span>Skills</a>
+        <a href="#experience" class="mono"><span class="line"></span>Experience</a>
+        <a href="#education" class="mono"><span class="line"></span>Education</a>
+      </nav>
+    </div>
+
+    <div class="side-bottom">
+      <a class="icon-btn" href="https://github.com/eduardruzsa" target="_blank" rel="noopener" aria-label="GitHub" title="GitHub">
+        <svg viewBox="0 0 16 16"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27s1.36.09 2 .27c1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8z"/></svg>
+      </a>
+      <button class="icon-btn" id="theme-toggle" aria-label="Toggle dark or light theme" title="Toggle theme">
+        <svg class="moon" viewBox="0 0 24 24"><path d="M12.1 22c-5.5 0-10-4.5-10-10 0-4.8 3.4-8.9 8.1-9.8.4-.1.8.1 1 .5.2.4.1.8-.2 1.1A7.99 7.99 0 0 0 17.9 16c1.2 0 2.4-.3 3.4-.8.4-.2.8-.1 1.1.2.3.3.3.7.2 1.1-1.6 3.3-5 5.5-8.5 5.5z"/></svg>
+        <svg class="sun" viewBox="0 0 24 24"><path d="M12 17a5 5 0 1 1 0-10 5 5 0 0 1 0 10zm0 5a1 1 0 0 1-1-1v-1a1 1 0 1 1 2 0v1a1 1 0 0 1-1 1zm0-18a1 1 0 0 1-1-1V2a1 1 0 1 1 2 0v1a1 1 0 0 1-1 1zm10 9h-1a1 1 0 1 1 0-2h1a1 1 0 1 1 0 2zM3 13H2a1 1 0 1 1 0-2h1a1 1 0 1 1 0 2zm15.36 6.36a1 1 0 0 1-.7-.29l-.71-.71a1 1 0 0 1 1.41-1.41l.71.7a1 1 0 0 1-.7 1.71zM5.34 6.34a1 1 0 0 1-.7-.29l-.71-.7A1 1 0 0 1 5.34 3.93l.71.71a1 1 0 0 1-.71 1.7zm12.31 0a1 1 0 0 1-.7-1.71l.7-.7a1 1 0 1 1 1.42 1.41l-.71.71a1 1 0 0 1-.71.29zM4.63 19.36a1 1 0 0 1-.7-1.7l.7-.71a1 1 0 0 1 1.42 1.41l-.71.71a1 1 0 0 1-.71.29z"/></svg>
+      </button>
+    </div>
+  </aside>
+
+  <main>
+    <section id="about" class="about reveal">
+      <h2><span class="num mono">01.</span> About</h2>
+      <p>I'm a backend engineer with <strong>6+ years</strong> of experience designing distributed systems and production APIs across <strong>fintech</strong>, <strong>manufacturing automation</strong>, and <strong>developer tooling</strong>.</p>
+      <p>Currently at <strong>Outbe</strong> in Berlin, I architect open banking integrations and Temporal-based transaction processing in Kotlin. Before that I built event-driven manufacturing systems at <strong>Portal</strong>, data pipelines at EV maker <strong>Arrival</strong>, and 3D-printing features for Fusion&nbsp;360 at <strong>Autodesk</strong>.</p>
+      <p>I care about clean architecture, reliability, and pragmatic AI-augmented workflows that let small teams ship like big ones.</p>
+      <div class="stats">
+        <div class="stat"><div class="num" data-count="6" data-suffix="+">0+</div><div class="label">years of engineering experience</div></div>
+        <div class="stat"><div class="num" data-count="5">0</div><div class="label">companies, from startups to Autodesk</div></div>
+        <div class="stat"><div class="num" data-count="90" data-suffix="%">0%</div><div class="label">API cost cut through smart caching</div></div>
+      </div>
+    </section>
+
+    <section id="skills" class="reveal">
+      <h2><span class="num mono">02.</span> Skills</h2>
+      <div class="skill-group">
+        <h3>Backend Development</h3>
+        <div class="chips">
+          <span class="chip">Kotlin</span><span class="chip">Python</span><span class="chip">TypeScript</span>
+          <span class="chip">Go</span><span class="chip">Java</span><span class="chip">C++</span>
+          <span class="chip">Ktor</span><span class="chip">GraphQL</span><span class="chip">gRPC</span>
+          <span class="chip">Protobuf</span><span class="chip">Temporal</span><span class="chip">Airflow</span>
+          <span class="chip">Node.js</span><span class="chip">PostgreSQL</span><span class="chip">MySQL</span>
+        </div>
+      </div>
+      <div class="skill-group">
+        <h3>Cloud &amp; DevOps</h3>
+        <div class="chips">
+          <span class="chip">AWS</span><span class="chip">EKS</span><span class="chip">RDS</span>
+          <span class="chip">Lambda</span><span class="chip">S3</span><span class="chip">Docker</span>
+          <span class="chip">Kubernetes</span><span class="chip">Terraform</span><span class="chip">Helm</span>
+          <span class="chip">GitLab CI/CD</span><span class="chip">GitHub Actions</span>
+          <span class="chip">Prometheus</span><span class="chip">Grafana</span>
+        </div>
+      </div>
+      <div class="skill-group">
+        <h3>Architecture &amp; Leadership</h3>
+        <div class="chips">
+          <span class="chip">Microservices</span><span class="chip">Domain-Driven Design</span>
+          <span class="chip">Event-Driven Architecture</span><span class="chip">Technical mentoring</span>
+          <span class="chip">Hiring</span><span class="chip">Code reviews</span>
+          <span class="chip">Agile / Scrum</span><span class="chip">AI-augmented engineering</span>
+        </div>
+      </div>
+    </section>
+
+    <section id="experience" class="reveal">
+      <h2><span class="num mono">03.</span> Experience</h2>
+      <div class="job-list">
+
+        <div class="job">
+          <div class="dates mono">2025 — Now</div>
+          <div>
+            <h3>Senior Software Engineer<span class="sep">·</span><span class="company">Outbe</span></h3>
+            <p class="loc">Berlin, Germany</p>
+            <ul>
+              <li><b>Open banking platform:</b> architected a multi-provider bank data service integrating Plaid, Quiltt, Yapily, and MX via gRPC/Protobuf, with a full consent lifecycle including UK 90-day renewal compliance.</li>
+              <li><b>Transaction processing:</b> designed Temporal workflows in Kotlin — cursor-based sync, amendment tracking, worldwide timezone resolution, multi-currency settlement, and a data encryption codec for SOC2 compliance.</li>
+              <li><b>Testing &amp; reliability:</b> per-provider integration test suites with a mock auth service; exponential webhook retry, configurable scheduling, and idempotent consent activation.</li>
+              <li><b>AI-augmented development:</b> maintained team velocity through a 4→2 engineer headcount reduction; owned architecture and review of all AI-generated output.</li>
+            </ul>
+            <div class="tags"><span class="tag">Kotlin</span><span class="tag">Temporal</span><span class="tag">gRPC</span><span class="tag">Protobuf</span><span class="tag">PostgreSQL</span></div>
+          </div>
+        </div>
+
+        <div class="job">
+          <div class="dates mono">2024 — 2025</div>
+          <div>
+            <h3>Software Engineer<span class="sep">·</span><span class="company">Portal</span></h3>
+            <p class="loc">London, United Kingdom</p>
+            <ul>
+              <li><b>Traceability &amp; events:</b> co-designed an event-driven traceability system with schema modeling and a Kotlin outbox client library for durable delivery via Postgres, with partitioning and automatic retry.</li>
+              <li><b>Manufacturing services:</b> built device batch provisioning workflows, food pod production management with GS1 code generation, and a label generation service with a GraphQL API and QR codes.</li>
+              <li><b>Search service:</b> designed a Kotlin Ktor service for address search and reverse geocoding; cut API costs by 90% through Caffeine caching.</li>
+              <li><b>Platform libraries:</b> led migration to Ktor 3, Koin 4, and gRPC 1.70; built Snowflake ID generation, backwards pagination, and a Gradle meta-plugin adopted by 6 developers.</li>
+            </ul>
+            <div class="tags"><span class="tag">Kotlin</span><span class="tag">Ktor</span><span class="tag">GraphQL</span><span class="tag">Postgres</span><span class="tag">Gradle</span></div>
+          </div>
+        </div>
+
+        <div class="job">
+          <div class="dates mono">2022 — 2024</div>
+          <div>
+            <h3>Software Engineer<span class="sep">·</span><span class="company">Arrival</span></h3>
+            <p class="loc">London, United Kingdom</p>
+            <ul>
+              <li><b>Data pipelines:</b> developed Airflow pipelines on Kubernetes extracting, repairing, and pushing 100GB+ of PLM data from Siemens NX — cut designer feedback loops from days to hours.</li>
+              <li><b>API:</b> designed data storage, validation, and provisioning with AWS RDS, Lambdas, and Hasura for a GraphQL service; fully automated data releases, replacing a manual process.</li>
+              <li><b>Infrastructure:</b> defined infrastructure as code with Terraform for reproducible RDS and VM instances.</li>
+              <li><b>Developer experience:</b> introduced Nix for reproducible environments; assisted the Docker-to-Podman transition.</li>
+            </ul>
+            <div class="tags"><span class="tag">Python</span><span class="tag">Airflow</span><span class="tag">Kubernetes</span><span class="tag">Terraform</span><span class="tag">AWS</span></div>
+          </div>
+        </div>
+
+        <div class="job">
+          <div class="dates mono">2022 — 2023</div>
+          <div>
+            <h3>Software Engineering Lead<span class="sep">·</span><span class="company">Peakism</span></h3>
+            <p class="loc">London, United Kingdom · Part-time</p>
+            <ul>
+              <li><b>Technical leadership:</b> led MVP development of a web application (Python API + React TypeScript); defined architecture with the CEO, hired the first engineer, and managed AWS infrastructure and CI/CD.</li>
+            </ul>
+            <div class="tags"><span class="tag">Python</span><span class="tag">React</span><span class="tag">TypeScript</span><span class="tag">AWS</span></div>
+          </div>
+        </div>
+
+        <div class="job">
+          <div class="dates mono">2019 — 2022</div>
+          <div>
+            <h3>Software Engineer<span class="sep">·</span><span class="company">Autodesk</span></h3>
+            <p class="loc">Birmingham, United Kingdom</p>
+            <ul>
+              <li><b>3D printing features:</b> developed a Qt settings editor for Fusion 360 and implemented per-model customization by decomposing the toolpathing kernel in C++ — a feature that differentiates the product from competitors.</li>
+              <li><b>API development:</b> ported the public mesh API into a new sub-module with CMake integration without disrupting existing add-ins; built AWS Lambdas for CAD assembly processing.</li>
+              <li><b>Infrastructure:</b> built a multi-repository tool for automated building, testing, and merging using the GitHub API and Python.</li>
+            </ul>
+            <div class="tags"><span class="tag">C++</span><span class="tag">Qt</span><span class="tag">CMake</span><span class="tag">Python</span><span class="tag">AWS Lambda</span></div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <section id="education" class="reveal">
+      <h2><span class="num mono">04.</span> Education</h2>
+      <div class="edu">
+        <div class="dates mono">2016 — 2019</div>
+        <div>
+          <h3>University of Birmingham</h3>
+          <p class="degree">BSc Computer Science</p>
+          <p>Led a robot programming team; developed a multiplayer game with an 80% game-loop optimisation (ranked 3rd of 16 teams); evaluated post-quantum cryptography timing security in the final year.</p>
+        </div>
+      </div>
+      <div class="edu">
+        <div class="dates mono">2012 — 2016</div>
+        <div>
+          <h3>Colegiul National Vasile Lucaciu</h3>
+          <p class="degree">Mathematics and Computer Science</p>
+          <p>Baccalaureate: 9.70/10 Mathematics, 9.30/10 Computer Science. Cambridge Advanced English C2.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="reveal">
+      <div class="cta">
+        <h3>Let's build something reliable.</h3>
+        <p>I'm always open to talking about distributed systems, backend architecture, or interesting engineering problems. The best way to reach me is on GitHub.</p>
+        <a class="btn" href="https://github.com/eduardruzsa" target="_blank" rel="noopener">Find me on GitHub</a>
+      </div>
+    </section>
+
+    <footer class="mono">© 2026 Eduard Gergo Ruzsa · Built by hand, no frameworks · Hosted on GitHub Pages</footer>
+  </main>
+</div>
+
+<script>
+  document.documentElement.classList.add('js');
+
+  // Theme toggle (persisted; defaults to system preference)
+  const root = document.documentElement;
+  const saved = localStorage.getItem('theme');
+  if (saved) root.dataset.theme = saved;
+  document.getElementById('theme-toggle').addEventListener('click', () => {
+    const systemLight = matchMedia('(prefers-color-scheme: light)').matches;
+    const current = root.dataset.theme || (systemLight ? 'light' : 'dark');
+    const next = current === 'dark' ? 'light' : 'dark';
+    root.dataset.theme = next;
+    localStorage.setItem('theme', next);
+  });
+
+  // Cursor spotlight
+  const spotlight = document.getElementById('spotlight');
+  const fine = matchMedia('(pointer: fine)').matches;
+  if (fine) {
+    addEventListener('mousemove', (e) => {
+      spotlight.style.background =
+        `radial-gradient(600px at ${e.clientX}px ${e.clientY}px, var(--spotlight), transparent 80%)`;
+    }, { passive: true });
+  }
+
+  // Reveal on scroll
+  const revealObserver = new IntersectionObserver((entries) => {
+    for (const entry of entries) {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('in');
+        revealObserver.unobserve(entry.target);
+      }
+    }
+  }, { threshold: 0.12 });
+  document.querySelectorAll('.reveal').forEach((el) => revealObserver.observe(el));
+
+  // Animated stat counters
+  const reduceMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const countObserver = new IntersectionObserver((entries) => {
+    for (const entry of entries) {
+      if (!entry.isIntersecting) continue;
+      countObserver.unobserve(entry.target);
+      const el = entry.target;
+      const target = +el.dataset.count;
+      const suffix = el.dataset.suffix || '';
+      if (reduceMotion) { el.textContent = target + suffix; continue; }
+      const start = performance.now();
+      const dur = 1200;
+      (function tick(now) {
+        const t = Math.min((now - start) / dur, 1);
+        const eased = 1 - Math.pow(1 - t, 3);
+        el.textContent = Math.round(target * eased) + suffix;
+        if (t < 1) requestAnimationFrame(tick);
+      })(start);
+    }
+  }, { threshold: 0.6 });
+  document.querySelectorAll('[data-count]').forEach((el) => countObserver.observe(el));
+
+  // Scroll-spy navigation
+  const navLinks = [...document.querySelectorAll('nav a')];
+  const sections = navLinks.map((a) => document.querySelector(a.getAttribute('href')));
+  const spy = new IntersectionObserver((entries) => {
+    for (const entry of entries) {
+      if (!entry.isIntersecting) continue;
+      navLinks.forEach((a) => a.classList.toggle('active',
+        a.getAttribute('href') === '#' + entry.target.id));
+    }
+  }, { rootMargin: '-30% 0px -60% 0px' });
+  sections.forEach((s) => s && spy.observe(s));
+</script>
+</body>
+</html>
