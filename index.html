@@ -193,6 +193,21 @@
   nav a:hover, nav a.active { color: var(--text-strong); }
   nav a:hover .line, nav a.active .line { width: 56px; background: var(--accent); }
 
+  .cv-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 32px;
+    padding: 9px 16px;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    font-size: 0.78rem;
+    text-decoration: none;
+    color: var(--text);
+    transition: border-color 0.2s ease, color 0.2s ease;
+  }
+  .cv-link:hover { border-color: var(--accent); color: var(--accent); }
+
   /* Sidebar footer: socials + theme */
   .side-bottom { display: flex; align-items: center; gap: 6px; margin-top: 40px; }
   .icon-btn {
@@ -438,6 +453,8 @@
         <a href="#experience" class="mono"><span class="line"></span>Experience</a>
         <a href="#education" class="mono"><span class="line"></span>Education</a>
       </nav>
+
+      <a class="cv-link mono" href="assets/Eduard_Ruzsa_CV.pdf" download>Download CV</a>
     </div>
 
     <div class="side-bottom">
@@ -458,9 +475,9 @@
       <p>Currently at <strong>Mirror</strong> in Berlin, I architect open banking integrations and Temporal-based transaction processing in Kotlin. Before that I built event-driven manufacturing systems at <strong>Portal</strong>, data pipelines at EV maker <strong>Arrival</strong>, and 3D-printing features for Fusion&nbsp;360 at <strong>Autodesk</strong>.</p>
       <p>I care about clean architecture, reliability, and pragmatic AI-augmented workflows that let small teams ship like big ones.</p>
       <div class="stats">
-        <div class="stat"><div class="num" data-count="6" data-suffix="+">0+</div><div class="label">years of engineering experience</div></div>
-        <div class="stat"><div class="num" data-count="5">0</div><div class="label">companies, from startups to Autodesk</div></div>
-        <div class="stat"><div class="num" data-count="90" data-suffix="%">0%</div><div class="label">API cost cut through smart caching</div></div>
+        <div class="stat"><div class="num" data-count="6" data-suffix="+">6+</div><div class="label">years of engineering experience</div></div>
+        <div class="stat"><div class="num" data-count="5">5</div><div class="label">companies, from startups to Autodesk</div></div>
+        <div class="stat"><div class="num" data-count="90" data-suffix="%">90%</div><div class="label">API cost cut through smart caching</div></div>
       </div>
     </section>
 
@@ -600,6 +617,7 @@
         <h3>Let's build something reliable.</h3>
         <p>I'm always open to talking about distributed systems, backend architecture, or interesting engineering problems. The best way to reach me is on GitHub.</p>
         <a class="btn" href="https://github.com/eduardruzsa" target="_blank" rel="noopener">Find me on GitHub</a>
+        <a class="btn ghost" href="assets/Eduard_Ruzsa_CV.pdf" download>Download CV (PDF)</a>
       </div>
     </section>
 
@@ -663,7 +681,12 @@
       })(start);
     }
   }, { threshold: 0.6 });
-  document.querySelectorAll('[data-count]').forEach((el) => countObserver.observe(el));
+  document.querySelectorAll('[data-count]').forEach((el) => {
+    // Real values live in the HTML for no-JS contexts (crawlers, previews, parsers);
+    // zero them here only when we're actually going to animate.
+    if (!reduceMotion) el.textContent = '0' + (el.dataset.suffix || '');
+    countObserver.observe(el);
+  });
 
   // Scroll-spy navigation
   const navLinks = [...document.querySelectorAll('nav a')];
