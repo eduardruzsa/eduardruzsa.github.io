@@ -4,9 +4,9 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Eduard Gergo Ruzsa — Backend Software Engineer</title>
-<meta name="description" content="Eduard Gergo Ruzsa — Backend Software Engineer in Berlin with 6+ years designing distributed systems and production APIs across fintech, manufacturing automation, and developer tooling.">
+<meta name="description" content="Eduard Gergo Ruzsa — Backend Software Engineer in Berlin with 7+ years designing distributed systems and production APIs across fintech, manufacturing automation, and developer tooling.">
 <meta property="og:title" content="Eduard Gergo Ruzsa — Backend Software Engineer">
-<meta property="og:description" content="6+ years designing distributed systems and production APIs across fintech, manufacturing automation, and developer tooling.">
+<meta property="og:description" content="7+ years designing distributed systems and production APIs across fintech, manufacturing automation, and developer tooling.">
 <meta property="og:type" content="website">
 <meta property="og:image" content="assets/avatar.jpg">
 <link rel="icon" href="assets/avatar.jpg">
@@ -471,11 +471,11 @@
   <main>
     <section id="about" class="about reveal">
       <h2><span class="num mono">01.</span> About</h2>
-      <p>I'm a backend engineer with <strong>6+ years</strong> of experience designing distributed systems and production APIs across <strong>fintech</strong>, <strong>manufacturing automation</strong>, and <strong>developer tooling</strong>.</p>
-      <p>Currently at <strong>Mirror</strong> in Berlin, I architect open banking integrations and Temporal-based transaction processing in Kotlin. Before that I built event-driven manufacturing systems at <strong>Portal</strong>, data pipelines at EV maker <strong>Arrival</strong>, and 3D-printing features for Fusion&nbsp;360 at <strong>Autodesk</strong>.</p>
+      <p>I'm a backend engineer with <strong>7+ years</strong> of experience designing distributed systems and production APIs across <strong>fintech</strong>, <strong>manufacturing automation</strong>, and <strong>developer tooling</strong>.</p>
+      <p>Currently at <strong>Mirror</strong> in Berlin, I own Temporal-based settlement processing in Kotlin and build open banking integrations across Kotlin and Rust services. Before that I built event-driven manufacturing systems at <strong>Portal</strong>, data pipelines at EV maker <strong>Arrival</strong>, and 3D-printing features for Fusion&nbsp;360 at <strong>Autodesk</strong>.</p>
       <p>I care about clean architecture, reliability, and pragmatic AI-augmented workflows that let small teams ship like big ones.</p>
       <div class="stats">
-        <div class="stat"><div class="num" data-count="6" data-suffix="+">6+</div><div class="label">years of engineering experience</div></div>
+        <div class="stat"><div class="num" data-count="7" data-suffix="+">7+</div><div class="label">years of engineering experience</div></div>
         <div class="stat"><div class="num" data-count="5">5</div><div class="label">companies, from startups to Autodesk</div></div>
         <div class="stat"><div class="num" data-count="90" data-suffix="%">90%</div><div class="label">API cost cut through smart caching</div></div>
       </div>
@@ -524,12 +524,13 @@
             <h3>Senior Software Engineer<span class="sep">·</span><span class="company">Mirror</span></h3>
             <p class="loc">Berlin, Germany</p>
             <ul>
-              <li><b>Open banking platform:</b> architected a multi-provider bank data service integrating Plaid, Quiltt, Yapily, and MX via gRPC/Protobuf, with a full consent lifecycle including UK 90-day renewal compliance.</li>
-              <li><b>Transaction processing:</b> designed Temporal workflows in Kotlin — cursor-based sync, amendment tracking, worldwide timezone resolution, multi-currency settlement, and a data encryption codec for SOC2 compliance.</li>
-              <li><b>Testing &amp; reliability:</b> per-provider integration test suites with a mock auth service; exponential webhook retry, configurable scheduling, and idempotent consent activation.</li>
-              <li><b>AI-augmented development:</b> maintained team velocity through a 4→2 engineer headcount reduction; owned architecture and review of all AI-generated output.</li>
+              <li><b>AI-augmented development:</b> sustained team velocity through a 4→2 engineer headcount reduction; owned specification, architecture, and review of all AI-generated code across Kotlin and Rust services.</li>
+              <li><b>Transaction processing:</b> own the Kotlin/Temporal service turning bank transactions into encrypted settlement reports — cursor-based sync, worldwide timezone resolution, and multi-currency settlement via an in-house rates service (Polygon.io, ECB, BoE, SNB, Fed). Integrated the L2 attester chain and a remote signer; hardened with infinite-retry workflows and a gRPC channel leak fix.</li>
+              <li><b>Open banking platform:</b> architected a multi-provider consent lifecycle (Plaid, Yapily, Teller, Quiltt, MX) over gRPC with UK 90-day renewal, expiry webhooks, and idempotent activation. Delivered the Plaid, Yapily, and Teller integrations in a Rust gRPC bank-data service, including a breaking consent API redesign, and migrated the consent service onto it.</li>
+              <li><b>Observability:</b> added Prometheus business and Temporal SDK metrics, Grafana dashboards, alert rules, and runbooks across four production services.</li>
+              <li><b>E2E testing:</b> built a Kotlin/JUnit E2E framework with browser-driven tests against Plaid Link, Yapily, and Teller Connect, WireMock transaction injection, and AWS Secrets Manager config; suites run in parallel in CI.</li>
             </ul>
-            <div class="tags"><span class="tag">Kotlin</span><span class="tag">Temporal</span><span class="tag">gRPC</span><span class="tag">Protobuf</span><span class="tag">PostgreSQL</span></div>
+            <div class="tags"><span class="tag">Kotlin</span><span class="tag">Rust</span><span class="tag">Temporal</span><span class="tag">gRPC</span><span class="tag">Prometheus</span><span class="tag">Grafana</span></div>
           </div>
         </div>
 
