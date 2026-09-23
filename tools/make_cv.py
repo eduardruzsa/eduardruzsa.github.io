@@ -66,7 +66,7 @@ story = [
     Spacer(1, 2),
     Paragraph('<link href="https://github.com/eduardruzsa" color="#18181b"><u>github.com/eduardruzsa</u></link>'
               ' &nbsp;&middot;&nbsp; '
-              '<link href="https://eduardruzsa.github.io" color="#18181b"><u>eduardruzsa.github.io</u></link>',
+              '<link href="https://eduardruzsa.com" color="#18181b"><u>eduardruzsa.com</u></link>',
               styles["contact"]),
     Spacer(1, 4),
     Paragraph("Backend engineer with 7+ years of experience designing distributed systems and production APIs "
